@@ -9,9 +9,7 @@ namespace POS.Models
         public int OrderId { get; set; }
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
-        public string PizzaId { get; set; }
-        public Pizza Pizza { get; set; }
-        public ICollection<OrderDetail> OrderDetails { get; set; }
 
+        public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

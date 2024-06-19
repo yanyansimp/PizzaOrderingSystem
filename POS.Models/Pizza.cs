@@ -12,6 +12,7 @@ namespace POS.Models
         public decimal Price { get; set; }
 
         public PizzaType PizzaType { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 
 }

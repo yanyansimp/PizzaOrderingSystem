@@ -24,10 +24,10 @@ namespace POS.API.Controllers
             return await _mediator.Send(new GetOrderDetailsQuery(orderId));
         }
 
-        [HttpPost]
-        public async Task<OrderDetail> Post(CreateOrderDetailCommand command)
-        {
-            return await _mediator.Send(command);
-        }
+        //[HttpPost]
+        //public async Task<OrderDetail> Post(CreateOrderDetailCommand command)
+        //{
+        //    return await _mediator.Send(command);
+        //}
     }
 }

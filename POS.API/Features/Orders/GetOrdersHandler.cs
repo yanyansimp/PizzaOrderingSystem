@@ -5,6 +5,7 @@ using POS.Models;
 using POS.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace POS.API.Features.Orders
 {
@@ -19,7 +20,12 @@ namespace POS.API.Features.Orders
 
         public async Task<IEnumerable<Order>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Orders.Include(o => o.Pizza).ToListAsync();
+            return await _context.Orders
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Pizza)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync(cancellationToken);
         }
     }
 }

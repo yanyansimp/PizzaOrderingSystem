@@ -15,25 +15,27 @@ namespace POS.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Pizza>()
-                .HasOne(p => p.PizzaType)
-                .WithMany(pt => pt.Pizzas)
-                .HasForeignKey(p => p.PizzaTypeId);
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<OrderDetail>()
-                .HasOne(od => od.Order)
-                .WithMany(o => o.OrderDetails)
+            // Define relationships and constraints
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.OrderDetails)
+                .WithOne(od => od.Order)
                 .HasForeignKey(od => od.OrderId);
 
             modelBuilder.Entity<OrderDetail>()
                 .HasOne(od => od.Pizza)
-                .WithMany()
+                .WithMany(p => p.OrderDetails)
                 .HasForeignKey(od => od.PizzaId);
 
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.Pizza)
-                .WithMany()
-                .HasForeignKey(o => o.PizzaId);
+            modelBuilder.Entity<Pizza>()
+                .HasIndex(p => p.PizzaId)
+                .IsUnique();
+
+            modelBuilder.Entity<Pizza>()
+                .HasOne(p => p.PizzaType)
+                .WithMany(pt => pt.Pizzas)
+                .HasForeignKey(p => p.PizzaTypeId);
         }
     }
 }

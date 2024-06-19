@@ -8,6 +8,20 @@ namespace POS.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Time = table.Column<TimeSpan>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PizzaTypes",
                 columns: table => new
                 {
@@ -38,27 +52,6 @@ namespace POS.Persistence.Migrations
                         column: x => x.PizzaTypeId,
                         principalTable: "PizzaTypes",
                         principalColumn: "PizzaTypeId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    Time = table.Column<TimeSpan>(nullable: false),
-                    PizzaId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
-                    table.ForeignKey(
-                        name: "FK_Orders_Pizzas_PizzaId",
-                        column: x => x.PizzaId,
-                        principalTable: "Pizzas",
-                        principalColumn: "PizzaId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -100,9 +93,10 @@ namespace POS.Persistence.Migrations
                 column: "PizzaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_PizzaId",
-                table: "Orders",
-                column: "PizzaId");
+                name: "IX_Pizzas_PizzaId",
+                table: "Pizzas",
+                column: "PizzaId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pizzas_PizzaTypeId",

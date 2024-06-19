@@ -9,6 +9,7 @@ namespace POS.API.Features.Orders
 {
     public class CreateOrderCommand : IRequest<Order>
     {
-        public string PizzaId { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
     }
+
 }

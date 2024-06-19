@@ -20,7 +20,7 @@ namespace POS.API.Features.OrderDetails
             var orderDetail = new OrderDetail
             {
                 OrderId = request.OrderId,
-                PizzaId = request.PizzaId,
+                //PizzaId = request.PizzaId,
                 Quantity = request.Quantity
             };
 

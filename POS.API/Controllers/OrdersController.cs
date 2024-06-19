@@ -21,9 +21,11 @@ namespace POS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Order>> Get()
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrders(int pageNumber = 1, int pageSize = 10)
         {
-            return await _mediator.Send(new GetOrdersQuery());
+            var query = new GetOrdersQuery(pageNumber, pageSize);
+            var orders = await _mediator.Send(query);
+            return Ok(orders);
         }
 
         [HttpPost]

@@ -9,7 +9,7 @@ using POS.Persistence;
 namespace POS.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240619095212_InitialCreate")]
+    [Migration("20240619165006_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,15 +27,10 @@ namespace POS.Persistence.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PizzaId")
-                        .HasColumnType("TEXT");
-
                     b.Property<TimeSpan>("Time")
                         .HasColumnType("TEXT");
 
                     b.HasKey("OrderId");
-
-                    b.HasIndex("PizzaId");
 
                     b.ToTable("Orders");
                 });
@@ -80,6 +75,9 @@ namespace POS.Persistence.Migrations
 
                     b.HasKey("PizzaId");
 
+                    b.HasIndex("PizzaId")
+                        .IsUnique();
+
                     b.HasIndex("PizzaTypeId");
 
                     b.ToTable("Pizzas");
@@ -104,13 +102,6 @@ namespace POS.Persistence.Migrations
                     b.ToTable("PizzaTypes");
                 });
 
-            modelBuilder.Entity("POS.Models.Order", b =>
-                {
-                    b.HasOne("POS.Models.Pizza", "Pizza")
-                        .WithMany()
-                        .HasForeignKey("PizzaId");
-                });
-
             modelBuilder.Entity("POS.Models.OrderDetail", b =>
                 {
                     b.HasOne("POS.Models.Order", "Order")
@@ -120,7 +111,7 @@ namespace POS.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("POS.Models.Pizza", "Pizza")
-                        .WithMany()
+                        .WithMany("OrderDetails")
                         .HasForeignKey("PizzaId");
                 });
 

@@ -34,7 +34,12 @@ namespace POS.API
 
             services.AddMediatR(typeof(Startup).Assembly);
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.MaxDepth = 64; // Increase the maximum depth if necessary
+                });
 
             services.AddSwaggerGen(c =>
             {
