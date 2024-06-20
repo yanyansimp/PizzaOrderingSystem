@@ -46,8 +46,8 @@ namespace POS.API
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "ApprovalManagerTHBLOAPI",
-                    Description = "Request and Approval of Transactions",
+                    Title = "PizzaOrderingSystem",
+                    Description = "Mini Project",
                 });
             });
         }
